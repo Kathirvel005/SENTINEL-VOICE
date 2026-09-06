@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShieldCheck, ShieldAlert, GitBranch, ArrowRight, CheckCircle2, Clock, MapPin, IndianRupee } from "lucide-react";
+import { X, ShieldCheck, GitBranch, MapPin } from "lucide-react";
 import { Task, TaskVersionRecord } from "../types";
 
 interface TruthGraphModalProps {
@@ -193,7 +193,7 @@ export function TruthGraphModal({
                   VERIFIED NEURAL SPOKEN TRUTH:
                 </span>
                 <p className="text-emerald-200 italic leading-relaxed">
-                  "{selectedVersion.spoken_response}"
+                  &ldquo;{selectedVersion.spoken_response}&rdquo;
                 </p>
               </div>
             )}

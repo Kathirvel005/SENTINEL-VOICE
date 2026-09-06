@@ -11,12 +11,11 @@ import { EventTimeline } from "../../components/EventTimeline";
 import { MetricsBar } from "../../components/MetricsBar";
 import { TruthGraphModal } from "../../components/TruthGraphModal";
 import { useVoiceSession } from "../../hooks/useVoiceSession";
-import { Video, Sparkles, Mic, Volume2, Radio, Sliders, ShieldCheck } from "lucide-react";
+import { Video, Sparkles, Mic, Radio, Sliders } from "lucide-react";
 import { TaskVersionRecord } from "../../types";
 
 export default function ConsolePage() {
   const {
-    sessionId,
     orbState,
     activeTask,
     turns,

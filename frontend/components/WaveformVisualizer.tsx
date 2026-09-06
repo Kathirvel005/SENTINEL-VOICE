@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { AudioPlaybackClient } from "../lib/audio-player";
 import { OrbState } from "../types";
-import { Volume2, VolumeX, Activity } from "lucide-react";
+import { Activity } from "lucide-react";
 
 interface WaveformVisualizerProps {
   audioPlayer: AudioPlaybackClient | null;
@@ -31,13 +31,13 @@ export function WaveformVisualizer({ audioPlayer, orbState }: WaveformVisualizer
       const isListening = orbState === "LISTENING";
       const isInterrupted = orbState === "INTERRUPTED";
 
-      let dataArray: any = null;
+      let dataArray: Uint8Array | null = null;
       let calculatedRms = 0;
 
       if (audioPlayer && audioPlayer.analyser) {
         const bufferLength = audioPlayer.analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
-        audioPlayer.analyser.getByteFrequencyData(dataArray);
+        audioPlayer.analyser.getByteFrequencyData(dataArray as unknown as Uint8Array<ArrayBuffer>);
 
         let sum = 0;
         for (let j = 0; j < dataArray.length; j++) {

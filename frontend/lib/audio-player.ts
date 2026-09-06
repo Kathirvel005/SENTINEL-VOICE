@@ -23,7 +23,7 @@ export class AudioPlaybackClient {
 
   public init() {
     if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       this.ctx = new AudioCtx();
 
       // Master processing chain:
@@ -120,7 +120,7 @@ export class AudioPlaybackClient {
 
       osc.start(now);
       osc.stop(now + 0.08);
-    } catch (e) {
+    } catch (_e) {
       // Audio cue fallback
     }
   }
@@ -147,7 +147,7 @@ export class AudioPlaybackClient {
 
       osc.start(now);
       osc.stop(now + 0.18);
-    } catch (e) {
+    } catch (_e) {
       // Audio cue fallback
     }
   }
@@ -171,7 +171,7 @@ export class AudioPlaybackClient {
 
       osc.start(now);
       osc.stop(now + 0.05);
-    } catch (e) {
+    } catch (_e) {
       // Audio cue fallback
     }
   }
@@ -229,7 +229,7 @@ export class AudioPlaybackClient {
                 this.playNext();
               }
             }
-          } catch (decodeErr) {
+          } catch (_decodeErr) {
             console.warn("[AudioPlayer] decodeAudioData deferred on chunk boundary");
           }
         }
@@ -259,7 +259,7 @@ export class AudioPlaybackClient {
                 this.playNext();
               }
             }
-          } catch (e) {
+          } catch (_e) {
             // Wait for more chunks to resolve frame boundary
           }
         }
@@ -316,7 +316,7 @@ export class AudioPlaybackClient {
       try {
         this.currentSource.stop();
         this.currentSource.disconnect();
-      } catch (e) {
+      } catch (_e) {
         // Source may already have ended
       }
       this.currentSource = null;

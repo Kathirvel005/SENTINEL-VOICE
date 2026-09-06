@@ -22,11 +22,11 @@ export interface TaskVersion {
   task_id: string;
   version_number: number;
   intent: string;
-  constraints: Record<string, any>;
+  constraints: Record<string, unknown>;
   status: TaskStatus;
   created_at: number;
   cancellation_reason?: string;
-  result?: Record<string, any>;
+  result?: Record<string, unknown>;
   spoken_response?: string;
 }
 
@@ -37,13 +37,13 @@ export interface Task {
   session_id: string;
   current_version: number;
   intent: string;
-  constraints: Record<string, any>;
+  constraints: Record<string, unknown>;
   status: TaskStatus;
   tool_name?: string;
   created_at: number;
   updated_at: number;
   version_history: TaskVersion[];
-  active_result?: Record<string, any>;
+  active_result?: Record<string, unknown>;
 }
 
 export interface ConversationTurn {
@@ -66,7 +66,7 @@ export interface SentinelEvent {
   task_version?: number;
   event_type: string;
   description: string;
-  payload: Record<string, any>;
+  payload: Record<string, unknown>;
 }
 
 export interface EvaluationMetrics {

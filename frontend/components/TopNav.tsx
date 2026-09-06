@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Shield, Zap, Sparkles, Terminal, BookOpen, BarChart3, Settings } from "lucide-react";
+import { Shield, Zap, Sparkles, Terminal, BookOpen, BarChart3, Settings } from "lucide-react";
 
 interface TopNavProps {
   isConnected: boolean;

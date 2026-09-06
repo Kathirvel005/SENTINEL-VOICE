@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mic, MicOff, Volume2, Cpu, RefreshCw, AlertTriangle } from "lucide-react";
+import { Mic, Volume2, Cpu, RefreshCw, AlertTriangle } from "lucide-react";
 import { OrbState } from "../types";
 
 interface VoiceOrbProps {
@@ -17,7 +17,7 @@ export function VoiceOrb({ orbState, onClick, taskVersion = 1 }: VoiceOrbProps) 
     colors: string[];
     ringColor: string;
     glowColor: string;
-    icon: any;
+    icon: React.ComponentType<{ className?: string }>;
     textColor: string;
   }> = {
     IDLE: {

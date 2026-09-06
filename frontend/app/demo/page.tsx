@@ -7,7 +7,7 @@ import { WaveformVisualizer } from "../../components/WaveformVisualizer";
 import { TaskVersionVisualizer } from "../../components/TaskVersionVisualizer";
 import { MetricsBar } from "../../components/MetricsBar";
 import { useVoiceSession } from "../../hooks/useVoiceSession";
-import { Play, AlertTriangle, CheckCircle, ArrowRight, Sparkles, Navigation, Globe, Compass } from "lucide-react";
+import { Play, Navigation, Globe, Compass } from "lucide-react";
 
 export default function DemoPage() {
   const {
@@ -16,7 +16,6 @@ export default function DemoPage() {
     metrics,
     isStressMode,
     isConnected,
-    currentLanguage,
     staleAlert,
     sendUtterance,
     triggerInterrupt,

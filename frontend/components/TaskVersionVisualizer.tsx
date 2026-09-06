@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, XCircle, Clock, ShieldAlert, ArrowDown, GitBranch } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, ArrowDown, GitBranch } from "lucide-react";
 import { Task, TaskVersionRecord } from "../types";
 import { Search } from "lucide-react";
 
@@ -11,7 +11,7 @@ interface TaskVersionVisualizerProps {
   onSelectVersion?: (version: TaskVersionRecord) => void;
 }
 
-export function TaskVersionVisualizer({ task, activeVersion = 1, onSelectVersion }: TaskVersionVisualizerProps) {
+export function TaskVersionVisualizer({ task, activeVersion: _activeVersion, onSelectVersion }: TaskVersionVisualizerProps) {
   if (!task || task.version_history.length === 0) {
     return (
       <div className="glass-panel rounded-2xl p-5 border border-slate-800 flex flex-col items-center justify-center text-center py-8">
@@ -127,7 +127,7 @@ export function TaskVersionVisualizer({ task, activeVersion = 1, onSelectVersion
                   <div className="flex items-center justify-between px-2 py-1 rounded bg-slate-950/60 border border-slate-800/50">
                     <span className="text-slate-400">Preference:</span>
                     <span className="text-cyan-300 font-semibold uppercase">
-                      {ver.constraints.route_preference || ver.constraints.activity_type || "FASTEST"}
+                      {(ver.constraints.route_preference as string) || (ver.constraints.activity_type as string) || "FASTEST"}
                     </span>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export function TaskVersionVisualizer({ task, activeVersion = 1, onSelectVersion
                 {ver.spoken_response && (
                   <div className="mt-2.5 p-2 rounded bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-300">
                     <span className="font-mono font-bold">RIME SPOKEN TRUTH: </span>
-                    <span>"{ver.spoken_response}"</span>
+                    <span>&ldquo;{ver.spoken_response}&rdquo;</span>
                   </div>
                 )}
               </motion.div>

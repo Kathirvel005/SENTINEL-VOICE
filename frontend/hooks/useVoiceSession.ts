@@ -6,14 +6,13 @@ import {
   Task, 
   ConversationTurn, 
   SentinelEvent, 
-  EvaluationMetrics, 
-  RimeConfig 
+  EvaluationMetrics
 } from "../types";
 import { AudioPlaybackClient } from "../lib/audio-player";
 
 export function useVoiceSession(initialSessionId?: string) {
-  const [sessionId, setSessionId] = useState<string>(
-    initialSessionId || `sess_${Math.random().toString(36).substring(2, 9)}`
+  const [sessionId] = useState<string>(
+    () => initialSessionId || "sess_live_main"
   );
   const [orbState, setOrbState] = useState<OrbState>("IDLE");
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -50,14 +49,21 @@ export function useVoiceSession(initialSessionId?: string) {
 
   const wsRef = useRef<WebSocket | null>(null);
   const audioPlayerRef = useRef<AudioPlaybackClient | null>(null);
+  const [audioPlayer] = useState<AudioPlaybackClient>(() => new AudioPlaybackClient());
   const recognitionRef = useRef<any>(null);
   const isHandsFreeRef = useRef<boolean>(false);
-  isHandsFreeRef.current = isHandsFree;
 
-  // Initialize audio player
   useEffect(() => {
-    audioPlayerRef.current = new AudioPlaybackClient();
-  }, []);
+    isHandsFreeRef.current = isHandsFree;
+  }, [isHandsFree]);
+
+  // Sync audio player ref and teardown on unmount
+  useEffect(() => {
+    audioPlayerRef.current = audioPlayer;
+    return () => {
+      audioPlayer.stop();
+    };
+  }, [audioPlayer]);
 
   // Update voice config over WebSocket
   const updateVoiceConfig = useCallback((persona: string, rate: string) => {
@@ -168,7 +174,7 @@ export function useVoiceSession(initialSessionId?: string) {
           const mData = await metRes.json();
           if (mData.metrics) setMetrics(mData.metrics);
         }
-      } catch (err) {
+      } catch (_err) {
         // Backend offline or polling error
       }
     };
@@ -246,7 +252,7 @@ export function useVoiceSession(initialSessionId?: string) {
     if (recognitionRef.current) {
       try {
         recognitionRef.current.abort();
-      } catch (e) {}
+      } catch (_e) {}
     }
 
     const recognition = new SpeechRecognition();
@@ -295,7 +301,7 @@ export function useVoiceSession(initialSessionId?: string) {
           if (isHandsFreeRef.current) {
             try {
               recognition.start();
-            } catch (err) {}
+            } catch (_err) {}
           }
         }, 300);
       } else if (orbState === "LISTENING") {
@@ -321,7 +327,7 @@ export function useVoiceSession(initialSessionId?: string) {
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
-        } catch (e) {}
+        } catch (_e) {}
       }
       setOrbState("IDLE");
     }
@@ -348,7 +354,7 @@ export function useVoiceSession(initialSessionId?: string) {
     triggerInterrupt,
     toggleStressMode,
     startListening,
-    audioPlayer: audioPlayerRef.current,
+    audioPlayer,
   };
 }
 

@@ -7,20 +7,24 @@ import { useVoiceSession } from "../../hooks/useVoiceSession";
 import { 
   BarChart3, 
   ShieldCheck, 
-  Zap, 
   Clock, 
-  RotateCcw, 
   Play, 
   CheckCircle2, 
-  Download,
-  Activity,
-  Layers
+  Download
 } from "lucide-react";
+
+interface BenchmarkResult {
+  status?: string;
+  interruption_stop_latency_ms?: number;
+  stale_v1_rejected?: boolean;
+  v2_accepted?: boolean;
+  [key: string]: unknown;
+}
 
 export default function EvaluationPage() {
   const { metrics, isConnected, isStressMode, toggleStressMode } = useVoiceSession();
   const [isRunningBench, setIsRunningBench] = useState(false);
-  const [benchResult, setBenchResult] = useState<any>(null);
+  const [benchResult, setBenchResult] = useState<BenchmarkResult | null>(null);
 
   const runBenchmarkSuite = async () => {
     setIsRunningBench(true);

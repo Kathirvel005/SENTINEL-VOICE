@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot, AlertTriangle, Sparkles, CornerDownLeft } from "lucide-react";
+import { Send, User, Bot, AlertTriangle, Sparkles } from "lucide-react";
 import { ConversationTurn } from "../types";
 
 interface ConversationPanelProps {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { TopNav } from "../../components/TopNav";
 import { useVoiceSession } from "../../hooks/useVoiceSession";
-import { Settings, Sparkles, Sliders, Cpu, Save, CheckCircle2 } from "lucide-react";
+import { Settings, Sparkles, Sliders, Save, CheckCircle2 } from "lucide-react";
 import { RimeConfig } from "../../types";
 
 export default function SettingsPage() {
@@ -36,7 +36,7 @@ export default function SettingsPage() {
           if (data.default_tool_delay_ms) setToolDelay(data.default_tool_delay_ms);
           if (data.default_interruption_threshold) setVadThreshold(data.default_interruption_threshold);
         }
-      } catch (err) {
+      } catch (_err) {
         // Backend offline
       }
     };

@@ -227,16 +227,24 @@ class RimeTTSService:
 
             comm = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
             chunk_index = 0
+            stream_iter = comm.stream()
 
-            async for chunk in comm.stream():
-                if cancellation_token.is_set():
-                    logger.warning(f"Rime neural stream interrupted for task {task_id} v{task_version} at chunk {chunk_index}")
-                    return False
+            try:
+                async for chunk in stream_iter:
+                    if cancellation_token.is_set():
+                        logger.warning(f"Rime neural stream interrupted for task {task_id} v{task_version} at chunk {chunk_index}")
+                        return False
 
-                if chunk["type"] == "audio" and len(chunk["data"]) > 0:
-                    chunk_index += 1
-                    await chunk_callback(chunk["data"], task_version, False)
-                    await asyncio.sleep(0.015)
+                    if chunk["type"] == "audio" and len(chunk["data"]) > 0:
+                        chunk_index += 1
+                        await chunk_callback(chunk["data"], task_version, False)
+                        await asyncio.sleep(0.015)
+            finally:
+                if hasattr(stream_iter, "aclose"):
+                    try:
+                        await stream_iter.aclose()
+                    except Exception:
+                        pass
 
             if cancellation_token.is_set():
                 return False
